@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Node delivered HTML</title>
+
+</head>
+<body>
+   <div>
+   	<h1>Send and Recieve JSON to Node</h1>
+        <button onClick="sendJSON()">Send</button>  <!-- Denna knapp skickar iväg det värdet vi vill lägga in-->
+        <button onClick="getJSON()">Get</button> <!-- Denna knapp hämtar värden-->
+        <p id ="result">
+        </p>
+ <ul id="valuelist"> <!-- Här kommer värden läggas från databasen -->
+
+ </ul>
+
+   </div>
+<script>
+    get();
+    //Vårt databojekt, vi har två variabler, namn och pris
+ var myData = [
+ {"name": "Lampa"
+}
+    ]
+
+function sendJSON(){
+console.log(JSON.stringify(myData)); //Loggar datan som ska skickas i sitt blivande JSON format
+console.log((myData)); //Loggar datan som ska skickas i javascript object format
+var xmlhttp = new XMLHttpRequest();   // skapar en ny request instans
+xmlhttp.onreadystatechange = function() {//när requested är redo körs funktionen
+    if (this.readyState == 4 && this.status == 200) { //om readystate är 4 (Done)  och att statusen är 200 | TIPS testa ändra till 201
+       document.getElementById("result").innerHTML =   this.responseText; //Skriver ut responsen på sidan.
+    }
+ };
+xmlhttp.open("POST", "http://localhost:3000/skapa/");  //Öppnar sökvägen och säger att det är ett get request
+xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8"); //Lägger in extra info som att vi skickar jsonkod och att det är utf-8 tecken (åäö bland annat)
+xmlhttp.send(JSON.stringify(myData)); //vi skickar databojektet men konverterar det först från javascript data till json.
+
+}
+
+function getJSON(){
+    var Listobject =document.getElementById("valuelist"); //Skapar en referens till. valuelist idet i htmlkoden.
+ //Listobject.innerHTML=""; //Om mna vill tömma innerhtml varje gång funktionen körs.
+    var xhr = new XMLHttpRequest(); //Skapar ett request
+xhr.onreadystatechange = function() { //när requested är redo körs funktionen
+    if (xhr.readyState == XMLHttpRequest.DONE) { //om statusen är klar går man vidare
+        //Sätt 1 skriv ut allt med alert
+        //alert(xhr.responseText);
+
+//Sätt 2 skriv ut allt i en lista
+        var values=JSON.parse(xhr.responseText); //Konvertera inputen från JSON till javascript objekt sparar dem i variabeln values
+        console.dir(values);  //Loggar allt i console dir, se din konsole för att se vilka värden som skickas
+        for (let index = 0; index < values.length; index++) { //G¨r igenom alla värden i values
+            const element = values[index]; //Tar värdena en efter en
+            console.log(element); //Skriver ut värdet i consolen, varför inte
+            var newnode =document.createElement("li"); //Skapar en ny html objekt av typen li (Lista)
+            newnode.innerHTML="Name: "+element.Namn+ "    Price: "+ element.Status+"$"; //Lägger in värden in vårat nyskapade objekt, näramare specefikt namn och pris
+             Listobject.appendChild(newnode); //Lägger in vårt nya objekt i den befitnliga listan.
+        }
+    }
+}
+xhr.open('GET', 'http://localhost:3000/skapa/arne', true); //Öppnar sökvägen och säger att det är ett get request
+xhr.send(null); //vi skickar inte iväg något utan hämtar bara.
+
+}
+
+function get(){
+    var Listobject =document.getElementById("valuelist"); //Skapar en referens till. valuelist idet i htmlkoden.
+ //Listobject.innerHTML=""; //Om mna vill tömma innerhtml varje gång funktionen körs.
+    var xhr = new XMLHttpRequest(); //Skapar ett request
+xhr.onreadystatechange = function() { //när requested är redo körs funktionen
+    if (xhr.readyState == XMLHttpRequest.DONE) { //om statusen är klar går man vidare
+        //Sätt 1 skriv ut allt med alert
+        //alert(xhr.responseText);
+
+//Sätt 2 skriv ut allt i en lista
+        var values=JSON.parse(xhr.responseText); //Konvertera inputen från JSON till javascript objekt sparar dem i variabeln values
+        console.dir(values);  //Loggar allt i console dir, se din konsole för att se vilka värden som skickas
+        for (let index = 0; index < values.length; index++) { //G¨r igenom alla värden i values
+            const element = values[index]; //Tar värdena en efter en
+            console.log(element); //Skriver ut värdet i consolen, varför inte
+            var newnode =document.createElement("li"); //Skapar en ny html objekt av typen li (Lista)
+            newnode.innerHTML="Name: "+element.Name; //Lägger in värden in vårat nyskapade objekt, näramare specefikt namn och pris
+             Listobject.appendChild(newnode); //Lägger in vårt nya objekt i den befitnliga listan.
+        }
+    }
+}
+xhr.open('GET', 'http://localhost:3000/skapa', true); //Öppnar sökvägen och säger att det är ett get request
+xhr.send(null); //vi skickar inte iväg något utan hämtar bara.
+
+}
+</script>
+</body>
+</html>

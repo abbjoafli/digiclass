@@ -1,0 +1,16 @@
+{
+  "expo": {
+   "name": "Digital_Classroom",
+   "icon": "./app/img/icon2.png",
+   "version": "0.0.1",
+   "sdkVersion": "27.0.0",
+   "orientation": "portrait",
+   "slug": "digital_classroom",
+   "ios": {
+     "bundleIdentifier": "com.digitalclassroom.digitalclassroom"
+   },
+   "android": {
+     "package": "com.digitalclassroom.digitalclassroom"
+   }
+  }
+}

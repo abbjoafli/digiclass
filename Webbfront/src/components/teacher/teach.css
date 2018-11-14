@@ -1,0 +1,91 @@
+#distance{
+    margin-right: 10px;
+}
+
+.buttons{
+ position: fixed;
+top: 0;
+right: 0;   
+}
+#uppg{
+
+background-color: darkolivegreen;
+}
+#help{
+
+background-color: darkred;
+}
+#box{
+border: black 2px solid;
+position: fixed;
+top: 0;
+right: 0;
+width: 300px;
+background: rgba(31, 31, 31, 0.95);
+}
+
+
+#hid{
+    visibility: hidden;
+}
+#show{
+    visibility: visible;
+}
+
+#Spara{
+    background-color: goldenrod;
+}
+#Spara:hover{
+    background-color: gold;
+}
+
+#d1{
+    visibility: hidden;
+}
+#box input{
+    width: 100%;
+}
+
+#box h3 {
+
+    margin-top: 50px;
+}
+
+#insidebox{
+
+width: 100%;
+min-height: 200px;
+}
+
+.Student{
+    color: goldenrod;
+    border: solid 3px black;
+    margin: 10px;
+    background-color: rgba(31, 31, 31, 0.95);
+    border: 1px solid black;
+    background-color: rgba(0, 0, 0, 0.46);
+    margin-top: 0px;
+  }
+  .Student h1{
+padding: 10px;
+
+background-color: rgba(31, 31, 31, 0.95);
+    margin: 0px;
+  }
+  .Student h3, .Student h4{
+      color: white;
+    background-color:  rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    margin-top: 0px;
+}
+
+.teal{
+    border-bottom: 5px solid #005a51 ;
+}
+
+button{
+    margin: 10px;
+}
+#green{background-color: green;}
+#yellow{background-color: yellow;}
+#red{background-color: red;}
