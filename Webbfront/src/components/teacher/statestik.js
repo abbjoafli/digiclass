@@ -11,19 +11,24 @@ class Statestik extends React.Component {
             name: this.props.name,
             fromBackend: "",
             SelectPerson:"",
-            chartData: [
-                
-            ],
+            color:[],
+            amount:0,
+            chartData: [       ],
             chartOptions: {}
         }
     }
 
+    componentWillUnmount() {
+        // use intervalId from the state to clear the interval
+        clearInterval(  this.intervalID);
+     }
+intervalID=0;
     async componentDidMount() {
         this.hamta()
 
         //Titta om det finns några nya elever eller nya statusar varje 15 sekund
         try {
-            setInterval(async () => {
+            this.intervalID =   setInterval(async () => {
                 this.hamta();
 
 
@@ -52,17 +57,22 @@ class Statestik extends React.Component {
     changeSelectPerson(Name){
 
 var AllValues= this.state.fromBackend;
-var ChartValues=[];
+var ChartValues=[];var color=[];
+var yellow=0;var green=0;var red=0;
  AllValues.forEach(element => {
      if (element.Name===Name) {
+         //Red
+         red++;
          var lab=element.Status;
          var color = "#F7464A";
          var highlight="#FF5A5E";
          if (lab==="green") {
+             green++;
             color= "#00cc00";
             highlight= " #ccffcc";
          }
          else if (lab==="yellow") {
+             yellow++;
             color= "#FDB45C";
             highlight= "#FFC870";
          }
@@ -75,7 +85,14 @@ var ChartValues=[];
          ChartValues.push(Newdata);
      }
  });
+ color[0]=red;
+ color[1]=yellow;
+ color[2]=green;
+ var amount=green+red+yellow;
+
 this.setState({SelectPerson: Name,
+    color: color,
+    amount: amount,
     chartData:ChartValues,
 chartOptions: {
 	//Boolean - Show a backdrop to the scale label
@@ -132,7 +149,7 @@ console.log(this.state.SelectPerson);
         var names =[]
         while (++i <= len) rows.push(i);
         return (
-            <div id="insidebox">
+            <div id="">
                 {
                     rows.map((i) => {
                         var add=true;
@@ -164,14 +181,23 @@ console.log(this.state.SelectPerson);
 
     render() {
         return (
-
-            <div  >
+//Highligta den som är vald! Lägg till tiden på varje del i pajen!, Lägg till start stop tid för att kunna ta bort resultat.
+//Ha ett annat diagram för steg eller över tiden.  
+<div  >
 
                          <button className="btn waves-effect waves-light green lighten-2"  type="submit"  onClick={this.props.action}>
             Stäng Statistik
             </button>
                 {this.CreateStudentsbuttons()
                 }
+                <h2>{this.state.SelectPerson}</h2>
+                <h3>Antal skiften: {this.state.amount}</h3>
+                <div className="col s4">
+                <span>Röda: {this.state.color[0]}</span>
+                <span> Gula: {this.state.color[1]}</span>
+                <span> Gröna: {this.state.color[2]}</span>
+                </div>
+                
                 <PieChart data={this.state.chartData} options={this.state.chartOptions}/>
             </div>
         );
@@ -185,45 +211,5 @@ var PieChart = require("react-chartjs").Pie;
 //     return <PieChart data={chartData} options={chartOptions}/>
 //   }
 // });
-class Del extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            number: this.props.number,
-            name: this.props.name,
-            steg: this.props.steg,
-        }
-    }
-    handleClick = () => this.props.onClick(this.props.name)
-    handleClick = () => this.props.onClick(this.props.name)
-    componentWillReceiveProps() 
-    {
-        this.setState({ number:  this.props.number});
-
-    }
-    render() {
-        return (
-            <div className="stepOne"  id={
-                this.props.isActive ? 'choosen' : 'notchoosen'
-              }
-            >
-
-                <div className="input-field">
-                    <h4 id="namn"> {this.state.name} </h4>
-                    <label htmlFor="namn">Plats {this.state.number}</label>
-                    <div className="row">
-                        <div className="col s6"> <h5>Steg: {this.state.steg} </h5></div>
-                        <div className="col s6">  <p onClick={this.handleClick} className="btn-floating btn-large waves-effect waves-light red lighten-1"><i className="material-icons">remove</i></p>
-                        </div>
-
-                    </div>
-                </div>
-
-
-            </div>
-        );
-    }
-}
 
 export default Statestik;

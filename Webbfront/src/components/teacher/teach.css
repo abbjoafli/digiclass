@@ -52,9 +52,10 @@ background: rgba(31, 31, 31, 0.95);
 }
 
 #insidebox{
-
+    overflow-y: scroll;
 width: 100%;
 min-height: 200px;
+max-height:700px;
 }
 
 .Student{

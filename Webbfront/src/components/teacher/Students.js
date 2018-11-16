@@ -246,6 +246,32 @@ console.log("Skicka!");
     });
 }
 
+shower(){
+  if (this.state.hidOrshow[0]=="show" && this.state.hidOrshow[1]=="show") {
+    return (<div> <div id={this.state.hidOrshow[0]}>
+      <Assignment uppgifter={this.state.uppgifter} name={this.state.classname}></Assignment>
+    </div>
+    <div id={this.state.hidOrshow[1]}>
+    <Helplist uppgifter={this.state.uppgifter}  name={this.state.classname}       />
+    </div></div>
+        );
+      }
+ else if (this.state.hidOrshow[0]=="show") {
+    return ( <div id={this.state.hidOrshow[0]}>
+  <Assignment uppgifter={this.state.uppgifter} name={this.state.classname}></Assignment>
+</div>
+    );
+  }
+  else if (this.state.hidOrshow[1]=="show"){
+    return (<div id={this.state.hidOrshow[1]}>
+      <Helplist uppgifter={this.state.uppgifter}  name={this.state.classname}       />
+      </div>);
+
+  }
+
+}
+
+
   render() {
 
     if (this.state.start) {
@@ -285,12 +311,8 @@ console.log("Skicka!");
         <button className="btn waves-effect waves-light red lighten-2"  type="submit" onClick={() => this.onSethidOrshow("help")}>
         {this.state.knappopen[1]} Hjälpkö 
         </button>
-             <div id={this.state.hidOrshow[0]}>
-              <Assignment uppgifter={this.state.uppgifter} name={this.state.classname}></Assignment>
-            </div>
-            <div id={this.state.hidOrshow[1]}>
-            <Helplist uppgifter={this.state.uppgifter}  name={this.state.classname}       />
-            </div>
+        {this.shower()}
+           
              
            
           </div>

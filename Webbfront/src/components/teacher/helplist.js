@@ -18,21 +18,17 @@ class Helplist extends React.Component {
         }
     }
 
-    handleClick = (index) => this.Skicka(index)
-
-    async Skicka(index) {
-
-
-    }
-
-
-
+    componentWillUnmount() {
+        // use intervalId from the state to clear the interval
+        clearInterval(  this.intervalID);
+     }
+intervalID=0;
     async componentDidMount() {
         this.hamta()
 
         //Titta om det finns några nya elever eller nya statusar varje 15 sekund
         try {
-            setInterval(async () => {
+           this.intervalID= setInterval(async () => {
                 this.hamta();
 
 
