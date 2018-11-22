@@ -18,7 +18,7 @@ export default class Component4 extends React.Component {
 			Medfrom: "",
 			name: "",
 			Reggad: false,
-			fetch:'http://192.168.0.103:3000/'
+			fetch:'http://iot.abbindustrigymnasium.se:3000/'
            
         }
 

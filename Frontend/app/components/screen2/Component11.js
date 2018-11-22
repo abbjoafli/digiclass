@@ -18,7 +18,7 @@ export default class Component11 extends React.Component {
 			Meddelande: "",
 			classname: this.props.navigation.state.params.classname,
             name: this.props.navigation.state.params.name,
-            fetch: "http://192.168.0.103:3000/elev/"+this.props.navigation.state.params.classname+"&"+ this.props.navigation.state.params.name,
+            fetch: "http://iot.abbindustrigymnasium.se:3000/elev/"+this.props.navigation.state.params.classname+"&"+ this.props.navigation.state.params.name,
            
         }
 

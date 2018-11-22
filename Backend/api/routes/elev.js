@@ -4,11 +4,11 @@ var mysql = require("mysql");
 
 const StatusLogger= require('../components/Statuslogger');
 var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "klassrum"
-});
+    host: "iot.abbindustrigymnasium.se",
+    user: "klass",
+    password: "klasser",
+    database: "klassrum"
+  });
 con.connect(function(err) {
     if (err) throw err;
 

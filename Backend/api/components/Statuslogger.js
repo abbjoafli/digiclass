@@ -1,11 +1,11 @@
 var mysql = require("mysql");
 
 var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
+    host: "iot.abbindustrigymnasium.se",
+    user: "klass",
+    password: "klasser",
     database: "klassrum"
-});
+  });
 var moment = require('moment');
 
 //Fungerar inte

@@ -246,7 +246,7 @@ console.log("Skicka!");
     });
 }
 
-shower(){
+shower(){// gör om så det inte ser buggigt ut
   if (this.state.hidOrshow[0]=="show" && this.state.hidOrshow[1]=="show") {
     return (<div> <div id={this.state.hidOrshow[0]}>
       <Assignment uppgifter={this.state.uppgifter} name={this.state.classname}></Assignment>

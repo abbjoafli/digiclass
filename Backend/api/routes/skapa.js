@@ -2,11 +2,11 @@ const express = require('express');
 const  router = express();
 var mysql = require("mysql");
 var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "klassrum"
-});
+    host: "iot.abbindustrigymnasium.se",
+    user: "klass",
+    password: "klasser",
+    database: "klassrum"
+  });
 con.connect(function(err) {
     if (err) throw err;
 
