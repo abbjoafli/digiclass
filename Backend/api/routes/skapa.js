@@ -1,16 +1,20 @@
 const express = require('express');
 const  router = express();
 var mysql = require("mysql");
-var con = mysql.createConnection({
-    host: "iot.abbindustrigymnasium.se",
-    user: "klass",
-    password: "klasser",
-    database: "klassrum"
-  });
-con.connect(function(err) {
-    if (err) throw err;
 
-});
+const StatusLogger= require('../components/Statuslogger');
+
+const con= require('../components/config');
+// var con = mysql.createConnection({
+//     host: "iot.abbindustrigymnasium.se",
+//     user: "klass",
+//     password: "klasser",
+//     database: "klassrum"
+//   });
+// con.connect(function(err) {
+//     if (err) throw err;
+
+// });
 
 router.get('/', (req, res, next) => {
 
@@ -161,7 +165,8 @@ router.post('/', (req, res, next) => { //  '/'= indexfilen i localhost/products/
             message:"HEJ"
         });
     });
-
+    
+    StatusLogger.CreateStatuslog(req.params.ClassName);
      CreateClassroom();
 
 

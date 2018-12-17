@@ -1,13 +1,6 @@
-var mysql = require("mysql");
 
-var con = mysql.createConnection({
-    host: "iot.abbindustrigymnasium.se",
-    user: "klass",
-    password: "klasser",
-    database: "klassrum"
-  });
+const con= require('../components/config');
 var moment = require('moment');
-
 //Fungerar inte
 CheckTable = function (ClassName) {
     con.query("select 1 from ? ", [ClassName], function (err, result, fields) {
@@ -30,6 +23,7 @@ GetValues = function (ClassName, Name, Want) {
 
         con.query("SELECT " + Want + " FROM " + ClassName + " WHERE `Namn` = ?", [Name], function (err, result, fields) {
 
+            console.log(result);
             if (err) {
                 return reject(err);
             } else {
@@ -45,7 +39,7 @@ module.exports = {
     //Uppdatera tid mellan status och även steg.
     CreateStatusPost: function (Classname, Name, Status,Step) {
         return new Promise(function (resolve, reject) { //Skapar löftet
-       
+       console.log(Status);
             if (Status != "")
                 GetValues(Classname, Name, "Time, Status, steg").then(result => {
                 
@@ -70,8 +64,9 @@ module.exports = {
                     let inputs = [Name, Status, Timediff,Step];
 
                     con.query(query, [inputs], function (err, result) {
-
+console.log(result);
                         if (err) {
+                            console.log(err);
                             return reject(err);
                         } else {
                             return resolve(result);

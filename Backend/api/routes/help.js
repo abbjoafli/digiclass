@@ -1,16 +1,8 @@
 const express = require('express');
 const  router = express();
 var mysql = require("mysql");
-var con = mysql.createConnection({
-    host: "iot.abbindustrigymnasium.se",
-    user: "klass",
-    password: "klasser",
-    database: "klassrum"
-  });
-con.connect(function(err) {
-    if (err) throw err;
 
-});
+const con= require('../components/config');
 
 
 

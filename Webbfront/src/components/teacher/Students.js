@@ -4,6 +4,7 @@ import './teach.css';
 import Assignment from './assignment.js';
 import Helplist from './helplist.js';
 import Statestik from './statestik.js';
+import RandomUser from './RandomUser.js';
 
 var crypto = require('crypto');
 class Students extends React.Component {
@@ -167,11 +168,17 @@ openClosed[i] =  "Öppna";
       )
   }
 
-  async componentDidMount() {
-    //this.Getupgift();
-    //Titta om det finns några nya elever eller nya statusar varje 15 sekund
+  componentWillUnmount() {
+    // use intervalId from the state to clear the interval
+    console.log("hejdå!");
+    clearInterval(  this.intervalID);
+ }
+
+  intervalID=0;
+
+  async StartStudentTimer() {
     try {
-      setInterval(async () => {
+      this.intervalID= setInterval(async () => {
         this.getfromdb();
       }, 15000); //15 sek
     } catch (e) {
@@ -179,8 +186,13 @@ openClosed[i] =  "Öppna";
     }
   }
 
+  async componentDidMount() {
+    this.StartStudentTimer();
+    //Titta om det finns några nya elever eller nya statusar varje 15 sekund
+  
+  }
+
   async Skicka() {
-console.log("Skicka!");
     let response = await fetch("http://localhost:3000/larare/" + this.state.classname, {
       method: 'PATCH',
       headers: {
@@ -224,7 +236,7 @@ console.log("Skicka!");
 
 
   CreateStudents() {
-    if (this.state.students.length !== 0) {
+    if (this.state.students.length !== 0|| this.state.students!=null) {
 
       return this.state.students.map((student, index) => {
         return (
@@ -241,6 +253,8 @@ console.log("Skicka!");
   }
 
   CloseStatics() {
+    
+    this.StartStudentTimer();
     this.setState({
         openStatestik: false
     });
@@ -316,6 +330,9 @@ shower(){// gör om så det inte ser buggigt ut
              
            
           </div>
+          {this.state.students.length  > 1 &&
+          <RandomUser students={this.state.students} ></RandomUser>
+          }
           <h2 className="ProductList-title">Elever i klassrummet: ({this.state.students.length})</h2>
           <div className="ProductList-container">
             <input type="text" value={this.state.Workmessfrom} onChange={(e) => this.handleChange("Workmessfrom", e.target.value)} />

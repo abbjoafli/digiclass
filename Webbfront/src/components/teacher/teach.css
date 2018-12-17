@@ -90,3 +90,10 @@ button{
 #green{background-color: green;}
 #yellow{background-color: yellow;}
 #red{background-color: red;}
+
+.randbox{
+    /* background-color: rgb(226, 77, 61); */
+    margin:0px;
+    min-width:200px;
+    text-align: left;
+}

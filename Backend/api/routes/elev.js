@@ -1,19 +1,8 @@
 const express = require('express');
 const  router = express();
-var mysql = require("mysql");
+const con= require('../components/config');
 
 const StatusLogger= require('../components/Statuslogger');
-var con = mysql.createConnection({
-    host: "iot.abbindustrigymnasium.se",
-    user: "klass",
-    password: "klasser",
-    database: "klassrum"
-  });
-con.connect(function(err) {
-    if (err) throw err;
-
-});
-
 
 router.get('/', (req, res, next) => {
     res.status(200).json({
@@ -54,17 +43,19 @@ router.patch('/logout/:ClassName&:name', (req, res, next) => {
 });
 
 //Uppdatera eleven , ny status
-router.patch('/:ClassName&:name', (req, res, next) => {
+router.patch('/:ClassName&:name', (req, res) => {
     req.params.ClassName= req.params.ClassName.toLowerCase();
     var Uppdates = [req.body.Status,req.body.Meddelande,req.params.name];
     var UpdateProduct = function(){
         return new Promise(function(resolve,reject){
-            StatusLogger.CreateStatuslog(req.params.ClassName);
+
             StatusLogger.CreateStatusPost(req.params.ClassName,Uppdates[2],Uppdates[0],"none").then(response =>{
 
                 con.query("UPDATE "+req.params.ClassName+" SET `Status` = ? , `Meddelande` = ?, `inloggad` = ? WHERE `Namn` =  ?",[Uppdates[0], Uppdates[1], "1" ,Uppdates[2]], function (err, result, fields) {
-                    if(err){                
-                      return reject(err);
+                    console.log(result);
+                    if (err) {
+                        console.log(err);
+                        return reject(err);
                   }else{              
                       return resolve(result);
                   }
